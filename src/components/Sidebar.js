@@ -13,6 +13,7 @@ function Sidebar() {
     <div className="sidebar">
       <div className="sidebar__header">
         <Avatar />
+
         <div className="sidebar__headerRight">
           <DonutLargeTwoTone />
           <ChatTwoTone />
