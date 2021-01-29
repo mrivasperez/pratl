@@ -1,9 +1,10 @@
 import { Avatar } from "@material-ui/core";
 import React from "react";
+import db from "../firebase";
 
 import "./style/SidebarChat.css";
 
-const SidebarChat = ({ addNewChat }) => {
+const SidebarChat = ({ id, name, addNewChat }) => {
   // get a random avatar from dicebear avatars api
   const avatarSeed = Math.floor(Math.random() * 1000000 + 1);
 
@@ -11,7 +12,10 @@ const SidebarChat = ({ addNewChat }) => {
     const roomName = prompt("Please enter name for chat:");
 
     if (roomName) {
-      // do some clever stuff in the database to create new chat...
+      // create a new chat in firebase with the name of roomName
+      db.collection("rooms").add({
+        name: roomName,
+      });
     }
   };
 
@@ -21,7 +25,7 @@ const SidebarChat = ({ addNewChat }) => {
         src={`https://avatars.dicebear.com/api/bottts/${avatarSeed}.svg`}
       />
       <div className="sidebarChat__info">
-        <h2>Room name</h2>
+        <h2>{name}</h2>
         <p>Message preview</p>
       </div>
     </div>
