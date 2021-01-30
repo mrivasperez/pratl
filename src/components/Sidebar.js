@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     // get current rooms from db, and update when changed
-    db.collection("rooms").onSnapshot((snapshot) =>
+    const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
       setRooms(
         // create object in rooms array within state
         snapshot.docs.map((doc) => ({
@@ -28,6 +28,8 @@ const Sidebar = () => {
       )
     );
     console.log(rooms);
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
