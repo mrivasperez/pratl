@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { IconButton } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Avatar, IconButton } from "@material-ui/core";
 import "./style/Chat.css";
 import {
   AttachFileTwoTone,
@@ -8,9 +9,21 @@ import {
   MoreVertTwoTone,
   SearchTwoTone,
 } from "@material-ui/icons";
+import db from "../firebase";
 
-function Chat() {
+const Chat = () => {
   const [input, setInput] = useState("");
+  const [roomName, setRoomName] = useState("");
+  const { roomID } = useParams();
+
+  // get new messages whenever the roomID changes
+  useEffect(() => {
+    if (roomID) {
+      db.collection("rooms")
+        .doc(roomID)
+        .onSnapshot((snapshot) => setRoomName(snapshot.data().name));
+    }
+  }, [roomID]);
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -21,8 +34,9 @@ function Chat() {
   return (
     <div className="chat">
       <div className="chat__header">
+        <Avatar src={`https://avatars.dicebear.com/api/bottts/${roomID}.svg`} />
         <div className="chat__headerInfo">
-          <h3>Room Name</h3>
+          <h3>{roomName}</h3>
           <p>Last Seen at...</p>
         </div>
         <div className="chat__headerRight">
@@ -70,6 +84,6 @@ function Chat() {
       </div>
     </div>
   );
-}
+};
 
 export default Chat;
