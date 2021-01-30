@@ -4,9 +4,12 @@ import Chat from "./components/Chat";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { useState } from "react";
 import Login from "./components/Login";
+import { useStateValue } from "./context/StateProvider";
 
 function App() {
-  const [user, setUser] = useState(null);
+  // pull in user from data layer
+  const [{ user }, dispatch] = useStateValue();
+  console.log(user);
   return (
     // BEM naming convention
     <div className="app">

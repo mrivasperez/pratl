@@ -12,10 +12,11 @@ import {
 } from "@material-ui/icons";
 
 import db from "../firebase";
+import { useStateValue } from "../context/StateProvider";
 
 const Sidebar = () => {
   const [rooms, setRooms] = useState([]);
-
+  const [{ user }] = useStateValue();
   useEffect(() => {
     // get current rooms from db, and update when changed
     const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
@@ -36,7 +37,9 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar__header">
-        <Avatar />
+        <Avatar
+          src={`https://avatars.dicebear.com/api/bottts/${user.uid}.svg`}
+        />
 
         <div className="sidebar__headerRight">
           <IconButton>
