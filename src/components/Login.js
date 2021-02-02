@@ -4,10 +4,10 @@ import { actionTypes } from "../context/reducer";
 import { useStateValue } from "../context/StateProvider";
 import { auth, provider } from "../firebase";
 
-import "./style/Login.css";
+import "./styles/Login.css";
 
 function Login() {
-  const [{}, dispatch] = useStateValue();
+  const [dispatch] = useStateValue();
 
   const signIn = () => {
     auth

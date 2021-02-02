@@ -1,23 +1,24 @@
 import { Avatar } from "@material-ui/core";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import db from "../firebase";
 
-import "./style/SidebarChat.css";
+import "./styles/SidebarChat.css";
 
 const SidebarChat = ({ id, name, addNewChat }) => {
-  // get a random avatar from dicebear avatars api
+  const [messages, setMessages] = useState("");
 
-  const createChat = () => {
-    const roomName = prompt("Please enter name for chat:");
-
-    if (roomName) {
-      // create a new chat in firebase with the name of roomName
-      db.collection("rooms").add({
-        name: roomName,
-      });
+  useEffect(() => {
+    if (id) {
+      db.collection("rooms")
+        .doc(id)
+        .collection("messages")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) =>
+          setMessages(snapshot.docs.map((doc) => doc.data()))
+        );
     }
-  };
+  }, [id]);
 
   return !addNewChat ? (
     <Link to={`/rooms/${id}`}>
@@ -25,15 +26,11 @@ const SidebarChat = ({ id, name, addNewChat }) => {
         <Avatar src={`https://avatars.dicebear.com/api/bottts/${id}.svg`} />
         <div className="sidebarChat__info">
           <h2>{name}</h2>
-          <p>Message preview</p>
+          <p>{messages[0]?.message}</p>
         </div>
       </div>
     </Link>
-  ) : (
-    <div onClick={createChat} className="sidebarChat">
-      <h2>+ New</h2>
-    </div>
-  );
+  ) : null;
 };
 
 export default SidebarChat;

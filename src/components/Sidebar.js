@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
 import SidebarChat from "./SidebarChat";
 
-import "./style/Sidebar.css";
-import {
-  DonutLargeTwoTone,
-  ChatTwoTone,
-  MoreVertTwoTone,
-  SearchOutlined,
-} from "@material-ui/icons";
+import "./styles/Sidebar.css";
+import { AddRounded } from "@material-ui/icons";
 
 import db from "../firebase";
 import { useStateValue } from "../context/StateProvider";
@@ -34,32 +29,29 @@ const Sidebar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const createChat = () => {
+    const roomName = prompt("Please enter name for chat:");
+
+    if (roomName) {
+      // create a new chat in firebase with the name of roomName
+      db.collection("rooms").add({
+        name: roomName,
+      });
+    }
+  };
+  console.log(user);
   return (
     <div className="sidebar">
       <div className="sidebar__header">
-        <Avatar
-          src={`https://avatars.dicebear.com/api/bottts/${user.uid}.svg`}
-        />
+        <h1>Pratl</h1>
 
         <div className="sidebar__headerRight">
-          <IconButton>
-            <DonutLargeTwoTone />
-          </IconButton>
-          <IconButton>
-            <ChatTwoTone />
-          </IconButton>
-          <IconButton>
-            <MoreVertTwoTone />
+          <IconButton onClick={createChat}>
+            <AddRounded />
           </IconButton>
         </div>
       </div>
 
-      <div className="sidebar__search">
-        <div className="sidebar__search__container">
-          <SearchOutlined />
-          <input type="text" placeholder="Search..." />
-        </div>
-      </div>
       <div className="sidebar__chats">
         <SidebarChat addNewChat />
         {rooms.map((room) => (

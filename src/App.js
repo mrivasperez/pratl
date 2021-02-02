@@ -2,13 +2,13 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import Chat from "./components/Chat";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import { useState } from "react";
+
 import Login from "./components/Login";
 import { useStateValue } from "./context/StateProvider";
 
 function App() {
   // pull in user from data layer
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   console.log(user);
   return (
     // BEM naming convention
