@@ -2,6 +2,9 @@
 
 Pratl is a minimalistic chat application that is desgined to help users communicate about any topic.
 
+Deployed using Firebase here:
+https://pratl-17d05.web.app/
+
 ## Screenshot
 
 ![A screenshot of Pratl app](screenshot.png)
