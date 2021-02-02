@@ -7,7 +7,7 @@ import { auth, provider } from "../firebase";
 import "./styles/Login.css";
 
 function Login() {
-  const [dispatch] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
 
   const signIn = () => {
     auth
